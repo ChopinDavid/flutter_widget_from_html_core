@@ -48,12 +48,11 @@ class TextStyleOps {
       p.copyWith(style: p.style.copyWith(color: color));
 
   static TextStyleHtml fontFamily(TextStyleHtml p, List<String> list) {
-    final List<String> fontFamilyElements =
-        p.style.fontFamily?.split('/') ?? [];
-    final bool hasSpecifiedPackage = fontFamilyElements.contains('packages');
-    String? packageName = hasSpecifiedPackage ? fontFamilyElements[1] : null;
+    final fontFamilyElements = p.style.fontFamily?.split('/') ?? [];
+    final hasSpecifiedPackage = fontFamilyElements.contains('packages');
+    var packageName = hasSpecifiedPackage ? fontFamilyElements[1] : null;
 
-    final String? fontFamily = list.isNotEmpty
+    final fontFamily = list.isNotEmpty
         ? hasSpecifiedPackage
             ? 'packages/$packageName/${list.first}'
             : list.first
