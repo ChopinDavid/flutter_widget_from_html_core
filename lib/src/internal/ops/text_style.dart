@@ -48,20 +48,22 @@ class TextStyleOps {
       p.copyWith(style: p.style.copyWith(color: color));
 
   static TextStyleHtml fontFamily(TextStyleHtml p, List<String> list) {
-    try {
-      var fam = list.isNotEmpty ? list.first : null;
-      fam = 'packages/flutter_blue_steel/$fam';
-      var thisStyle = p.style.copyWith(
-        fontFamily: fam,
+    final List<String> fontFamilyElements = p.style.fontFamily.split('/');
+    final bool hasSpecifiedPackage = fontFamilyElements.contains('packages');
+    String? packageName = hasSpecifiedPackage ? fontFamilyElements[1] : null;
+
+    final String? fontFamily = list.isNotEmpty
+        ? hasSpecifiedPackage
+            ? 'packages/$packageName/${list.first}'
+            : list.first
+        : null;
+
+    return p.copyWith(
+      style: p.style.copyWith(
+        fontFamily: fontFamily,
         fontFamilyFallback: list.skip(1).toList(growable: false),
-      );
-      return p.copyWith(
-        style: thisStyle,
-      );
-    } catch (e) {
-      print(e);
-      return p;
-    }
+      ),
+    );
   }
 
   static TextStyleHtml fontSize(TextStyleHtml p, css.Expression v) =>
