@@ -62,7 +62,7 @@ class TextStyleOps {
       print(e);
       return p;
     }
-  };
+  }
 
   static TextStyleHtml fontSize(TextStyleHtml p, css.Expression v) =>
       p.copyWith(style: p.style.copyWith(fontSize: _fontSizeTryParse(p, v)));
